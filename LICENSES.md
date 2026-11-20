@@ -21,6 +21,6 @@ Replace every placeholder below with the verified information for the exact imag
 
 - Confirm each licence explicitly permits commercial website use, any applicable resale context, and any intended edits/crops.
 - Record any attribution language exactly as required by the rights holder.
-- Make sure derivative AVIF/WebP versions, if provided, are covered by the same rights as their original image.
+- Make sure derivative image formats, if provided, are covered by the same rights as their original image.
 - Replace the example `.example` domain, contact details, and property information in the page before launch.
 - Add server-side validation, consent recording, rate limiting, spam protection, and secure handling/retention rules before connecting a booking backend. Client-side checks and the honeypot are usability and low-effort spam measures only; they are not a security boundary.
