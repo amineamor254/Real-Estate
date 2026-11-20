@@ -49,6 +49,20 @@
     return date >= bounds.today && date <= bounds.lastDay && date.getDay() !== 0;
   }
 
+  function isAvailableTime(dateKey, time) {
+    const date = parseDateKey(dateKey);
+    if (!date || !isBookableDate(date) || typeof time !== "string" || !/^(09|1[0-6]):00$/.test(time)) {
+      return false;
+    }
+
+    const hour = Number(time.slice(0, 2));
+    const bookedSlots = MOCK_AVAILABILITY[localDateKey(date)] || [];
+    return hour >= VISIT_START_HOUR
+      && hour < VISIT_END_HOUR
+      && !(localDateKey(date) === localDateKey(getDateBounds().today) && hour <= new Date().getHours())
+      && !bookedSlots.includes(time);
+  }
+
   function seedMockAvailability() {
     const start = new Date();
     start.setHours(0, 0, 0, 0);
@@ -221,17 +235,29 @@
       }
     }
 
+    function getImageTitle(index) {
+      const item = items[index];
+      const sourceImage = bySelector("img", item);
+      const label = bySelector(".gallery-item__label", item);
+      const labelText = label ? label.textContent.trim() : "";
+      return labelText || sourceImage.alt || item.getAttribute("aria-label") || "Property image";
+    }
+
     function showImage(index) {
       activeIndex = (index + items.length) % items.length;
       const item = items[activeIndex];
       const sourceImage = bySelector("img", item);
-      const label = bySelector(".gallery-item__label", item);
-      const title = label ? label.textContent.trim() : sourceImage.alt;
+      const title = getImageTitle(activeIndex);
 
-      image.classList.remove("is-missing");
-      image.src = sourceImage.src;
       image.alt = sourceImage.alt;
-      caption.textContent = title;
+      if (image.dataset.failedSource === sourceImage.src) {
+        image.classList.add("is-missing");
+        caption.textContent = `${title} — image not yet supplied`;
+      } else {
+        image.classList.remove("is-missing");
+        image.src = sourceImage.src;
+        caption.textContent = title;
+      }
       counter.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
       preloadNext(activeIndex);
     }
@@ -261,10 +287,16 @@
     });
 
     image.addEventListener("error", () => {
+      const failedSource = image.getAttribute("src");
+      if (lightbox.hidden || !failedSource || image.dataset.failedSource === image.src) return;
+      image.dataset.failedSource = image.src;
       image.classList.add("is-missing");
-      caption.textContent = `${bySelector(".gallery-item__label", items[activeIndex]).textContent.trim()} — image not yet supplied`;
+      caption.textContent = `${getImageTitle(activeIndex)} — image not yet supplied`;
     });
-    image.addEventListener("load", () => image.classList.remove("is-missing"));
+    image.addEventListener("load", () => {
+      image.classList.remove("is-missing");
+      delete image.dataset.failedSource;
+    });
 
     dialog.addEventListener("touchstart", (event) => {
       if (event.touches.length !== 1) return;
@@ -399,6 +431,7 @@
       state.time = typeof existingDraft.time === "string" && /^(09|1[0-6]):00$/.test(existingDraft.time)
         ? existingDraft.time
         : "";
+      if (state.time && !isAvailableTime(state.date, state.time)) state.time = "";
       state.name = cleanText(existingDraft.name, 100);
       state.email = cleanText(existingDraft.email, 254);
       state.phone = cleanText(existingDraft.phone, 30);
@@ -418,13 +451,18 @@
 
     function getDateLabel(dateKey) {
       const date = parseDateKey(dateKey);
-      return date ? DATE_FORMATTER.format(date) : "Not selected";
+      return date && isBookableDate(date) ? DATE_FORMATTER.format(date) : "Not selected";
+    }
+
+    function getTimeLabel(dateKey, time) {
+      if (!isAvailableTime(dateKey, time)) return "Not selected";
+      return `${time}–${String(Number(time.slice(0, 2)) + 1).padStart(2, "0")}:00`;
     }
 
     function updateSummary() {
       bySelector("[data-summary-type]").textContent = state.visitType || "Not selected";
       bySelector("[data-summary-date]").textContent = getDateLabel(state.date);
-      bySelector("[data-summary-time]").textContent = state.time ? `${state.time}–${String(Number(state.time.slice(0, 2)) + 1).padStart(2, "0")}:00` : "Not selected";
+      bySelector("[data-summary-time]").textContent = getTimeLabel(state.date, state.time);
     }
 
     function persistState() {
@@ -609,7 +647,7 @@
       fieldMap[key].setAttribute("aria-invalid", "true");
     }
 
-    function validatePersonalDetails() {
+    function validatePersonalDetails(shouldFocus) {
       syncFieldsToState();
       clearFieldErrors();
       let firstInvalidField = null;
@@ -636,7 +674,7 @@
       }
 
       if (firstInvalidField) {
-        firstInvalidField.focus();
+        if (shouldFocus !== false) firstInvalidField.focus();
         return false;
       }
       return true;
@@ -656,7 +694,7 @@
       list.replaceChildren();
       appendReviewRow(list, "Visit", state.visitType);
       appendReviewRow(list, "Date", getDateLabel(state.date));
-      appendReviewRow(list, "Time", `${state.time}–${String(Number(state.time.slice(0, 2)) + 1).padStart(2, "0")}:00`);
+      appendReviewRow(list, "Time", getTimeLabel(state.date, state.time));
       appendReviewRow(list, "Name", state.name);
       appendReviewRow(list, "Email", state.email);
       appendReviewRow(list, "Phone", state.phone);
@@ -664,7 +702,7 @@
       if (state.message) appendReviewRow(list, "Note", state.message);
     }
 
-    function validateStep(stepNumber) {
+    function validateStep(stepNumber, shouldFocus) {
       clearStepError(stepNumber);
       if (stepNumber === 1) {
         if (!state.visitType) {
@@ -678,19 +716,12 @@
           return false;
         }
       } else if (stepNumber === 3) {
-        const date = parseDateKey(state.date);
-        const bookedSlots = date ? MOCK_AVAILABILITY[localDateKey(date)] || [] : [];
-        const hour = Number(state.time.slice(0, 2));
-        const validSlot = /^(09|1[0-6]):00$/.test(state.time)
-          && hour >= VISIT_START_HOUR
-          && hour < VISIT_END_HOUR
-          && !(date && localDateKey(date) === localDateKey(getDateBounds().today) && hour <= new Date().getHours());
-        if (!state.time || !validSlot || !date || !isBookableDate(date) || bookedSlots.includes(state.time)) {
+        if (!isAvailableTime(state.date, state.time)) {
           showStepError(stepNumber, "Choose an available time slot.");
           return false;
         }
       } else if (stepNumber === 4) {
-        return validatePersonalDetails();
+        return validatePersonalDetails(shouldFocus);
       }
       return true;
     }
@@ -904,6 +935,12 @@
     if (initialDate) {
       calendarMonth.setFullYear(initialDate.getFullYear(), initialDate.getMonth(), 1);
       calendarMonth.setDate(1);
+    }
+    for (let previousStep = 1; previousStep < state.step; previousStep += 1) {
+      if (!validateStep(previousStep, false)) {
+        state.step = previousStep;
+        break;
+      }
     }
     updateSummary();
     setStep(state.step, false);
