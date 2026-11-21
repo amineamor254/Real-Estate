@@ -32,12 +32,17 @@ There are no JavaScript frameworks, package dependencies, or build tools in the 
 
 ## Project structure
 
-```text
+
 Casa Aurelia/
 ├── index.html
 ├── LICENSES.md
 ├── README.md
 ├── assets/
+│   ├── favicon/
+│   │   ├── apple-touch-icon.png
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   └── fivicon.svg
 │   └── images/
 │       ├── agent.jpg
 │       ├── floorplan-first.jpg
@@ -50,12 +55,12 @@ Casa Aurelia/
 │       ├── gallery-06.jpg
 │       ├── gallery-07.jpg
 │       ├── gallery-08.jpg
-│       ├── hero.jpg     
+│       └── hero.jpg
 ├── css/
 │   └── styles.css
 └── js/
     └── main.js
-```
+
 
 The `hero.jpg`, `gallery-01.jpg` through `gallery-08.jpg`, `floorplan-ground.jpg`, `floorplan-first.jpg`, and `agent.jpg` files are referenced by the page. Other JPGs listed above are present in the package but are not currently referenced by the page.
 
@@ -88,6 +93,23 @@ Update the advisor's name, role, description, email, and phone links in `index.h
 ### Gallery and floor plans
 
 Replace the referenced files in `assets/images/` with your own images, keeping the filenames or updating their paths in `index.html`. The gallery Lightbox reads its image and alternative text from the gallery thumbnails.
+
+### Favicon and site logo
+
+The favicon files are located in `assets/favicon/`.
+
+The package includes the following favicon files:
+
+- `favicon.svg` – SVG favicon for modern browsers.
+- `favicon-32x32.png` – 32 × 32 PNG favicon.
+- `favicon-16x16.png` – 16 × 16 PNG favicon.
+- `apple-touch-icon.png` – 180 × 180 icon for Apple touch devices.
+
+To change the website favicon, replace these files with your own logo while keeping the original filenames, or update the corresponding file paths in the `<head>` section of `index.html`.
+
+The same logo is also displayed beside the website name in the header. To replace it, update the image path in the header markup and adjust the `.brand__logo` styling in `css/styles.css` if necessary.
+
+For best results, use a square image with sufficient padding around the logo. Keep the SVG and PNG versions visually consistent.
 
 ## Replacing images
 

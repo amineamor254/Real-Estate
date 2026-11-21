@@ -1,4 +1,4 @@
-/* Tokens */
+/* Design tokens: customize the shared palette, fonts, type scale, page width, spacing, and easing here. */
 :root {
   color-scheme: light;
   --color-ink: #20231f;
@@ -26,7 +26,7 @@
   --ease-out: cubic-bezier(.2, .75, .25, 1);
 }
 
-/* Base */
+/* Base styles and resets: global element behavior, focus states, selection, and reusable section widths. */
 *,
 *::before,
 *::after {
@@ -123,6 +123,7 @@ textarea:focus-visible,
   transform: translateY(0);
 }
 
+/* Reusable layout and spacing utilities. */
 .content-width {
   width: min(var(--content-width), calc(100% - var(--page-gutter) * 2));
   margin-inline: auto;
@@ -174,6 +175,7 @@ h2 {
   line-height: .98;
 }
 
+/* Buttons and interactive text links: customize shared radius-free appearance and hover states here. */
 .text-link {
   display: inline-flex;
   min-height: 44px;
@@ -278,6 +280,7 @@ h2 {
   visibility: hidden;
 }
 
+/* Reveal effects: initial hidden state is only enabled when JavaScript and supported motion settings allow it. */
 .reveal {
   opacity: 1;
   transform: none;
@@ -294,7 +297,7 @@ h2 {
   transform: translateY(0);
 }
 
-/* Header and navigation */
+/* Header and navigation: brand dimensions and the desktop/mobile navigation presentation. */
 .site-header {
   position: sticky;
   z-index: 50;
@@ -319,6 +322,13 @@ h2 {
   gap: .7rem;
   color: var(--color-ivory);
   text-decoration: none;
+}
+
+.brand__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .brand__mark {
@@ -393,7 +403,7 @@ h2 {
   transform: translateY(-3.5px) rotate(-45deg);
 }
 
-/* Hero */
+/* Hero: main image, overlay, headline area, facts, and image-fallback presentation. */
 .hero {
   position: relative;
   min-height: min(760px, calc(100vh - 82px));
@@ -501,7 +511,7 @@ h2 {
   letter-spacing: .14em;
 }
 
-/* Property overview */
+/* Property overview: introduction copy and residence detail card layout. */
 .intro__grid {
   display: grid;
   align-items: start;
@@ -603,7 +613,7 @@ h2 {
   width: 100%;
 }
 
-/* Gallery */
+/* Gallery: grid proportions and Lightbox image-grid sizing. */
 .section-heading {
   display: flex;
   align-items: flex-end;
@@ -666,7 +676,7 @@ h2 {
   text-transform: uppercase;
 }
 
-/* Features */
+/* Features and amenities: two-column list layout and icon treatment. */
 .amenities__layout {
   display: grid;
   grid-template-columns: minmax(240px, .8fr) minmax(0, 1.4fr);
@@ -711,7 +721,7 @@ h2 {
   stroke-width: 1.15;
 }
 
-/* Floor plans and specs */
+/* Floor plans and specs: tab states, plan images, and specification table. */
 .section-heading--light > p {
   color: #c4c3bb;
 }
@@ -807,7 +817,7 @@ h2 {
   text-align: end;
 }
 
-/* Location */
+/* Location: destination copy, travel-time list, and decorative map placeholder. */
 .location__grid {
   display: grid;
   align-items: center;
@@ -946,7 +956,7 @@ h2 {
   font-weight: 400;
 }
 
-/* Booking */
+/* Booking interface: notice, progress, calendar, time slots, validation, review, and success states. */
 .booking-notice {
   display: flex;
   max-width: 920px;
@@ -1483,7 +1493,7 @@ h2 {
   margin: .6rem auto 0;
 }
 
-/* Advisor */
+/* Advisor: portrait and contact-card layout. */
 .advisor__card {
   display: grid;
   min-height: 570px;
@@ -1534,7 +1544,7 @@ h2 {
   text-decoration: none;
 }
 
-/* FAQ */
+/* FAQ accordion: trigger, expanded indicator, and answer panel states. */
 .faq__layout {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
@@ -1598,7 +1608,7 @@ h2 {
   margin: 0;
 }
 
-/* Footer */
+/* Footer: office details, links, legal information, and bottom utility bar. */
 .site-footer {
   padding-block: 4.5rem 1.5rem;
   background: var(--color-ink);
@@ -1665,7 +1675,7 @@ h2 {
   text-decoration: none;
 }
 
-/* Lightbox */
+/* Gallery Lightbox: overlay, dialog, controls, captions, and missing-image state. */
 .lightbox {
   position: fixed;
   z-index: 100;
@@ -1745,7 +1755,7 @@ h2 {
   font-size: 1.15rem;
 }
 
-/* Responsive */
+/* Responsive breakpoints: adjust these widths only with corresponding HTML/JavaScript layout checks when needed. */
 @media (max-width: 1024px) {
   .site-header__inner {
     min-height: 74px;
@@ -2098,6 +2108,7 @@ h2 {
   }
 }
 
+/* Reduced-motion preference: removes smooth scrolling, animation, and reveal effects for applicable users. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

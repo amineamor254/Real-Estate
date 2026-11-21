@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  // Booking defaults and formatting settings; adjust mock availability behavior carefully, but retain separate live-backend work.
   const DRAFT_KEY = "aurelia-visit-draft";
   const VISIT_START_HOUR = 9;
   const VISIT_END_HOUR = 17;
@@ -15,6 +16,7 @@
   });
   const MOCK_AVAILABILITY = Object.create(null);
 
+  // Shared DOM and date utilities used throughout the page.
   const bySelector = (selector, root) => (root || document).querySelector(selector);
   const allBySelector = (selector, root) => Array.from((root || document).querySelectorAll(selector));
 
@@ -64,6 +66,7 @@
   }
 
   function seedMockAvailability() {
+    // Demonstration-only availability: generates a few unavailable slots for upcoming dates.
     const start = new Date();
     start.setHours(0, 0, 0, 0);
     let seeded = 0;
@@ -82,6 +85,7 @@
 
   seedMockAvailability();
 
+  // Prevents control characters and excess whitespace in values entered or restored by the booking form.
   function cleanText(value, maxLength) {
     return String(value || "")
       .replace(/[\u0000-\u001f\u007f]/g, " ")
@@ -97,6 +101,7 @@
     ).filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
   }
 
+  // Mobile navigation: manages open/close state, Escape and Tab keyboard behavior, and resize handling.
   function initMobileNavigation() {
     const toggle = bySelector(".menu-toggle");
     const navigation = bySelector("#primary-navigation");
@@ -165,6 +170,7 @@
     navigation.inert = isMobile();
   }
 
+  // Floor-plan tabs: updates selected tab state and reveals only the matching panel.
   function initTabs() {
     allBySelector("[data-tabs]").forEach((tabSet) => {
       const tabs = allBySelector('[role="tab"]', tabSet);
@@ -197,6 +203,7 @@
     });
   }
 
+  // FAQ accordion: opens the selected answer and closes the previously selected answer.
   function initAccordion() {
     const accordion = bySelector("[data-accordion]");
     if (!accordion) return;
@@ -212,6 +219,7 @@
     });
   }
 
+  // Gallery and Lightbox: opens the selected image and supports close, arrow, Tab, and swipe interactions.
   function initGallery() {
     const lightbox = bySelector("[data-lightbox]");
     const image = bySelector(".lightbox__image", lightbox);
@@ -340,6 +348,7 @@
     });
   }
 
+  // Local draft storage: reads partially completed visit requests from this browser only.
   function getDraft() {
     try {
       const rawDraft = window.localStorage.getItem(DRAFT_KEY);
@@ -380,6 +389,7 @@
     return { demo: true };
   }
 
+  // Five-step booking flow: manages demo selection, validation, local draft, review, and confirmation state.
   function initBooking() {
     const form = bySelector("#booking-form");
     if (!form) return;
@@ -522,6 +532,7 @@
       if (error) error.textContent = message;
     }
 
+    // Calendar: renders the next 60 days; Sunday and past dates remain unavailable.
     function renderCalendar() {
       const bounds = getDateBounds();
       const currentMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
@@ -574,6 +585,7 @@
       }
     }
 
+    // Time slots: combines demo unavailable slots with normal visit hours and current-day restrictions.
     function renderTimeSlots() {
       slotGrid.replaceChildren();
       const selectedDate = parseDateKey(state.date);
@@ -647,6 +659,7 @@
       fieldMap[key].setAttribute("aria-invalid", "true");
     }
 
+    // Step validation: checks required contact details and consent before moving to review.
     function validatePersonalDetails(shouldFocus) {
       syncFieldsToState();
       clearFieldErrors();
@@ -739,6 +752,7 @@
         .replace(/\n/g, "\\n");
     }
 
+    // ICS export: creates a calendar file for the simulated visit; it is not a confirmed appointment.
     function downloadCalendar() {
       const date = parseDateKey(state.date);
       if (!date || !state.time) return;
@@ -946,6 +960,7 @@
     setStep(state.step, false);
   }
 
+  // Image fallbacks: retries JPEG sources where needed, then applies a missing-image presentation.
   function initImageFallbacks() {
     allBySelector(".image-frame img").forEach((image) => {
       const picture = image.closest(".image-frame");
@@ -966,6 +981,7 @@
     });
   }
 
+  // Reveal effects: observes in-page elements and uses IntersectionObserver when motion is allowed.
   function initRevealMotion() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
     document.documentElement.classList.add("js-motion");
@@ -980,6 +996,7 @@
     allBySelector(".reveal").forEach((element) => observer.observe(element));
   }
 
+  // Initialization: runs page enhancements after the DOM is ready.
   function init() {
     const year = bySelector("[data-current-year]");
     if (year) year.textContent = String(new Date().getFullYear());

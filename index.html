@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Document metadata: replace the title, description, canonical URL, and social-preview URLs for the deployed property. -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1e211e">
@@ -16,7 +17,13 @@
   <meta name="twitter:title" content="Casa Aurelia — A private residence on the Costa del Sol">
   <meta name="twitter:description" content="A considered contemporary residence in Marbella's Sierra Blanca.">
   <meta name="twitter:image" content="https://www.casaaurelia.example/assets/images/hero.jpg">
+  <!-- Favicon and app-icon references: replace these files or paths while keeping equivalent sizes and formats. -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Structured data: update listing, address, price, area, and availability values for another property. -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,17 +57,23 @@
   </script>
   <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <header class="site-header" id="top">
+  <!-- Header and brand: update the logo, wordmark, home link, navigation labels, and section targets here. -->
+  <header class="site-header">
     <div class="site-header__inner">
-      <a class="brand" href="#top" aria-label="Aurelia Estates — home">
-        <svg class="brand__mark" viewBox="0 0 42 42" role="img" aria-label="Aurelia monogram">
-          <path d="M21 3.5 38.5 21 21 38.5 3.5 21 21 3.5Z" fill="none" stroke="currentColor" stroke-width="1"/>
-          <path d="M13.5 27 21 12l7.5 15M16.5 21h9" fill="none" stroke="currentColor" stroke-width="1.25"/>
-        </svg>
-        <span class="brand__wordmark">AURELIA <span>ESTATES</span></span>
+      <a class="brand" href="index.html" aria-label="Aurelia Estates — home">
+         <img
+      src="assets/favicon/apple-touch-icon.png"
+      alt=""
+      class="brand__logo"
+      width="40"
+      height="40"
+    >
+        <span class="brand__wordmark">
+          AURELIA <span>ESTATES</span>
+        </span>
       </a>
 
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
@@ -78,6 +91,7 @@
   </header>
 
   <main id="main-content">
+    <!-- Hero: customize the headline, location eyebrow, supporting copy, property facts, and hero image path. -->
     <section class="hero" aria-labelledby="hero-title">
       <picture class="hero__picture image-frame">
         <img src="assets/images/hero.jpg" srcset="assets/images/hero.jpg 2400w" sizes="100vw" alt="Contemporary stone residence set among mature Mediterranean gardens" width="2400" height="1500" fetchpriority="high" decoding="async">
@@ -100,6 +114,7 @@
       <span class="hero__index" aria-hidden="true">01 / 11</span>
     </section>
 
+    <!-- Overview and specifications: keep property text, dimensions, features, and asking price consistent across this template. -->
     <section class="intro section-pad" id="overview" aria-labelledby="overview-title">
       <div class="content-width intro__grid">
         <div class="intro__copy reveal">
@@ -131,6 +146,7 @@
       </div>
     </section>
 
+    <!-- Image gallery and Lightbox: replace image paths and alt text; keep gallery indexes sequential for Lightbox navigation. -->
     <section class="gallery-section section-pad section-pad--soft" id="gallery" aria-labelledby="gallery-title">
       <div class="content-width">
         <div class="section-heading reveal">
@@ -166,6 +182,7 @@
       </div>
     </section>
 
+    <!-- Amenities: customize the visible feature labels and their accompanying SVG icons. -->
     <section class="amenities section-pad" aria-labelledby="amenities-title">
       <div class="content-width amenities__layout">
         <div class="amenities__intro reveal">
@@ -186,6 +203,7 @@
       </div>
     </section>
 
+    <!-- Floor plans and specifications: replace plan images and tab labels; keep tab and panel aria references paired. -->
     <section class="plans section-pad section-pad--dark" id="plans" aria-labelledby="plans-title">
       <div class="content-width">
         <div class="section-heading section-heading--light reveal">
@@ -227,6 +245,7 @@
       </div>
     </section>
 
+    <!-- Location: update destination text and approximate travel times; the map is a visual placeholder rather than a live map. -->
     <section class="location section-pad" id="location" aria-labelledby="location-title">
       <div class="content-width location__grid">
         <div class="location__copy reveal">
@@ -254,6 +273,7 @@
       </div>
     </section>
 
+    <!-- Visit request demonstration: the form, local draft, availability, and ICS export are frontend-only; no real booking is sent. -->
     <section class="booking section-pad section-pad--soft" id="booking" aria-labelledby="booking-title">
       <div class="content-width">
         <div class="section-heading reveal">
@@ -362,6 +382,7 @@
       </div>
     </section>
 
+    <!-- Advisor: replace portrait, name, role, email, and telephone details. -->
     <section class="advisor section-pad" id="advisor" aria-labelledby="advisor-title">
       <div class="content-width advisor__card reveal">
         <div class="advisor__image image-frame">
@@ -379,6 +400,7 @@
       </div>
     </section>
 
+    <!-- FAQ accordion: keep each trigger ID paired with its panel ID and accessible label. -->
     <section class="faq section-pad section-pad--soft" id="faq" aria-labelledby="faq-title">
       <div class="content-width faq__layout">
         <div class="faq__intro reveal"><p class="eyebrow">A few answers</p><h2 id="faq-title">Before you arrive.</h2><p>For anything more personal, your advisor is always available.</p></div>
@@ -404,6 +426,7 @@
     </section>
   </main>
 
+  <!-- Footer: customize office, contact, legal-link, credit, copyright, and property-reference details. -->
   <footer class="site-footer" id="footer">
     <div class="content-width">
       <div class="site-footer__main">
