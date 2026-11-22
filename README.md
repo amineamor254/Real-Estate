@@ -94,6 +94,8 @@ Update the advisor's name, role, description, email, and phone links in `index.h
 
 Replace the referenced files in `assets/images/` with your own images, keeping the filenames or updating their paths in `index.html`. The gallery Lightbox reads its image and alternative text from the gallery thumbnails.
 
+The included floor plan images are illustrative design assets, not accurate architectural drawings or verified measurements of the featured property. Replace them with accurate floor plans when customizing the template for a real property.
+
 ### Favicon and site logo
 
 The favicon files are located in `assets/favicon/`.

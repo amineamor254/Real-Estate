@@ -775,12 +775,13 @@
         "PRODID:-//Aurelia Estates//Visit Request Demo//EN",
         "CALSCALE:GREGORIAN",
         "BEGIN:VEVENT",
-        `UID:${reference}@aureliaestates.example`,
+        `UID:${reference}@casa-aurelia.local`,
         `DTSTAMP:${asUtcIcsDate(new Date())}`,
         `DTSTART:${asLocalIcsDate(start)}`,
         `DTEND:${asLocalIcsDate(end)}`,
         "SUMMARY:Casa Aurelia — visit request (demo)",
         `DESCRIPTION:${escapeCalendarText(`Simulated visit request only. Not a confirmed appointment. Reference ${state.reference}.`)}`,
+        // Demo location: replace with the actual property address when customizing the template.
         "LOCATION:Sierra Blanca, Marbella (exact address shared privately)",
         "END:VEVENT",
         "END:VCALENDAR"

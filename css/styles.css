@@ -769,6 +769,7 @@ h2 {
 }
 
 .plan-image {
+  width: 100%;
   min-height: 300px;
   aspect-ratio: 1.65;
   background: #d6d1c5;
