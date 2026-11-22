@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  // Booking defaults and formatting settings; adjust mock availability behavior carefully, but retain separate live-backend work.
+  // CUSTOMIZATION: Adjust visit hours, booking window, and date formatting settings here.
   const DRAFT_KEY = "aurelia-visit-draft";
   const VISIT_START_HOUR = 9;
   const VISIT_END_HOUR = 17;
@@ -65,6 +65,7 @@
       && !bookedSlots.includes(time);
   }
 
+  // DEMO DATA: Generates sample unavailable slots. Replace this with real availability from your booking API.
   function seedMockAvailability() {
     // Demonstration-only availability: generates a few unavailable slots for upcoming dates.
     const start = new Date();

@@ -42,7 +42,7 @@ Casa Aurelia/
 │   │   ├── apple-touch-icon.png
 │   │   ├── favicon-16x16.png
 │   │   ├── favicon-32x32.png
-│   │   └── fivicon.svg
+│   │   └── favicon.svg
 │   └── images/
 │       ├── agent.jpg
 │       ├── floorplan-first.jpg
@@ -62,7 +62,7 @@ Casa Aurelia/
     └── main.js
 
 
-The `hero.jpg`, `gallery-01.jpg` through `gallery-08.jpg`, `floorplan-ground.jpg`, `floorplan-first.jpg`, and `agent.jpg` files are referenced by the page. Other JPGs listed above are present in the package but are not currently referenced by the page.
+The `hero.jpg`, `gallery-01.jpg` through `gallery-08.jpg`, `floorplan-ground.jpg`, `floorplan-first.jpg`, and `agent.jpg` files are referenced by the page.
 
 ## Getting started
 
